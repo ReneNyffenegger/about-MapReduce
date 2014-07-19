@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <title>The Map Reduce Algorithm</title>
+
+  <style type="text/css">
+
+    #sales-data {border-collapse: collapse}
+
+    td {padding-left: 2em}
+
+    #sales-data tbody td:nth-child(3) {font-family: monospace; text-align: right}
+
+
+    thead {background-color:#ccc}
+    
+  </style>
+
+  <script type="text/javascript" src="job.js"                    ></script>
+  <script type="text/javascript" src="map.js"                    ></script>
+  <script type="text/javascript" src="reduce.js"                 ></script>
+  <script type="text/javascript" src="context.js"                ></script>
+  <script type="text/javascript" src="html_table_data_fetcher.js"></script>
+
+  <script type="text/javascript">
+
+
+    function main() {
+
+      var data_reader  = new tq84.html_table_data_fetcher('sales-data');    // where do we get the data from
+      var mapReduceJob = new tq84.job(data_reader, tq84.map, tq84.reduce);  // do the calculation
+
+      var result = mapReduceJob.run();
+
+      show_result(result);
+
+      console.log('finished');
+    }
+
+    function show_result(result) {
+
+      var out = document.getElementById('out');
+     
+      for (item in result) {
+
+        out.innerHTML += item + ": " + result[item] + "<br>";
+    
+      }
+
+    }
+  </script>
+
+
+
+</head>
+<body onload="main()";>
+
+
+  <table summary='Sales Data' id="sales-data"><caption>Sales Data (Input)</caption>
+
+    <!-- following data created with ./create_data.pl -->
+    <thead><tr><td>Item     </td><td>Month  </td><td>Sales</td></tr></thead>
+    <tbody><tr><td>Fork </td><td>01/2014</td><td> 827</td></tr>
+           <tr><td>Knive</td><td>12/2013</td><td> 892</td></tr>
+           <tr><td>Spoon</td><td>04/2014</td><td> 722</td></tr>
+           <tr><td>Knive</td><td>02/2014</td><td> 448</td></tr>
+           <tr><td>Spoon</td><td>01/2014</td><td>  96</td></tr>
+           <tr><td>Knive</td><td>01/2014</td><td> 530</td></tr>
+           <tr><td>Spoon</td><td>12/2013</td><td> 327</td></tr>
+           <tr><td>Fork </td><td>11/2013</td><td> 559</td></tr>
+           <tr><td>Knive</td><td>11/2013</td><td> 628</td></tr>
+           <tr><td>Knive</td><td>03/2014</td><td> 324</td></tr>
+           <tr><td>Knive</td><td>04/2014</td><td> 929</td></tr>
+           <tr><td>Fork </td><td>12/2013</td><td> 419</td></tr>
+           <tr><td>Spoon</td><td>03/2014</td><td> 155</td></tr>
+           <tr><td>Fork </td><td>04/2014</td><td> 932</td></tr>
+           <tr><td>Fork </td><td>03/2014</td><td> 441</td></tr>
+           <tr><td>Spoon</td><td>02/2014</td><td>  21</td></tr>
+           <tr><td>Spoon</td><td>11/2013</td><td> 428</td></tr>
+           <tr><td>Fork </td><td>02/2014</td><td> 409</td></tr></tbody>
+  </table>
+
+  <p>
+
+  Computed result:<br>
+  <div id='out'>
+  </div>
+
+</body>
+</html>
+
